@@ -1,0 +1,65 @@
+{
+  "name": "engine",
+  "productName": "engine",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/index.js",
+  "build": {
+    "asar": true
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "build": "npm run build-mac && npm run build-win && npm run build-linux",
+    "build-win": "electron-packager . --platform=win32 --asar --overwrite --out=build",
+    "build-mac": "electron-packager . --platform=darwin --asar --overwrite --out=build",
+    "build-linux": "electron-packager . --platform=linux --asar --overwrite --out=build"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Artur Wagner",
+    "email": "35738771+ArturWagnerBusiness@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "engine"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.35",
+    "@types/matter-js": "^0.14.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "phaser": "^3.21.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-deb": "^6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
+    "@electron-forge/maker-zip": "^6.0.0-beta.50",
+    "electron": "8.2.2",
+    "typescript": "^3.8.3"
+  }
+}

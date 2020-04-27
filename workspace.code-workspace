@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"node_modules/": true,
+			".gitattributes": true,
+			".gitignore": true,
+			"package-lock.json": true,
+			"OLD/": true,
+			"build/": true,
+		}
+	}
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Application</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./style/index.css">
+    <link rel="stylesheet" href="./style/menu.css">
+    <link rel="stylesheet" href="./style/loading.css">
+    <link rel="stylesheet" href="./style/Player.css">
+
+    <!-- Font -->
+    <script src="./lib/1c9144b004.js" crossorigin="anonymous"></script>
+    
+    <!-- Libraries -->
+    <script src="./lib/jquery-3.5.0.min.js"></script>
+    <script src="./lib/phaser.js"></script>
+  </head>
+  <body>
+    <div id="menu-bar">
+      <div class="left" role="menu">
+        <button class="menubar-btn" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <h5 id="title">Application</h5>
+      </div>
+      <div class="right">
+        <button class="menubar-btn" id="minimize-btn"><i class="fas fa-window-minimize"></i></button>
+        <button class="menubar-btn" id="max-unmax-btn"><i class="far fa-square"></i></button>
+        <button class="menubar-btn" id="close-btn"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div id="content">
+      <!-- Loading Scene -->
+      <div id="loading" class="">
+        <div class="background"></div>
+        <div class="spinner right" style="top:10px;left:10px;"></div>
+        <div class="spinner right" style="top:10px;left:60px;"></div>
+        <div class="spinner right" style="top:10px;left:110px;"></div>
+        <div class="spinner left" style="top:10px;right:10px;"></div>
+        <div class="spinner left" style="top:10px;right:60px;"></div>
+        <div class="spinner left" style="top:10px;right:110px;"></div>
+        <div class="spinner right" style="bottom:10px;left:10px;"></div>
+        <div class="spinner right" style="bottom:10px;left:60px;"></div>
+        <div class="spinner right" style="bottom:10px;left:110px;"></div>
+        <div class="spinner left" style="bottom:10px;right:10px;"></div>
+        <div class="spinner left" style="bottom:10px;right:60px;"></div>
+        <div class="spinner left" style="bottom:10px;right:110px;"></div>
+        <div class="text"></div>
+      </div>
+
+      <!-- Canvas -->
+      <div id="Phaser_Zoom" class="contract">
+        <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom<5){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom+1);windowState.saveWindow();}"><h1>+</h1></button>
+        <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom!==1){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom-1);windowState.saveWindow();}"><h1>-</h1></button>
+        <button type="button" onclick="loadingScreen(true)"><h5>True</h5></button>
+        <button type="button" onclick="loadingScreen(false)"><h5>False</h5></button>
+        <button class="head" type="button" onclick='(()=>{
+          $("#Phaser_Zoom").toggleClass("expand");
+          $("#Phaser_Zoom").toggleClass("contract");
+          $("#Phaser_Zoom .head").html((document.getElementById("Phaser_Zoom").className==="expand")?"<h3>&lt</h3>":"<h4>&gt</h3>");
+        })()'><h3>&gt</h3></button>
+      </div>
+      <div id="Phaser"></div>
+      <div id="Manager">
+        <div id="Player" class="content">
+          <div class="hp">
+            <div class="text">Health</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+          <div class="mana">
+            <div class="text">Mana</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+          <div class="speed">
+            <div class="text">Speed</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+        </div>
+        <div class="dragbar"></div>
+      </div>
+
+
+      <!-- Game Objects -->
+      <script src="./assets/entities/Construction.js"></script>
+      <script src="./assets/entities/Construction_Home.js"></script>
+      <script src="./assets/entities/Construction_Tree.js"></script>
+
+      <script src="./assets/entities/Entity.js"></script>
+      <script src="./assets/entities/Player.js"></script>
+      <script src="./assets/entities/Goblin.js"></script>
+      <script src="./assets/entities/Portal.js"></script>
+
+      <!-- Game Scenes -->
+      <script src="./modules/Spawn.js"></script>
+      <script src="./modules/Spawn_Home.js"></script>
+
+      <!-- Const -->
+      <script src="./CST.js"></script>
+      
+      <!-- Load Window Header-->
+      <script src="./engine/renderer.js"></script>
+
+      <!-- Game init -->
+      <script src="./modules/init.js"></script>
+    </div>
+  </body>
+</html>

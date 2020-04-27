@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ESnext",
+        "removeComments": true,
+        "lib": [ "es5", "dom", "scripthost"],
+        "rootDir": "src",
+        "noImplicitAny": true
+    },
+    "files": [
+        "./node_modules/phaser/types/phaser.d.ts",
+        "./node_modules/phaser/types/matter.d.ts"
+    ],
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "./src/assets/audio/",
+        "./src/assets/images/",
+        "./src/assets/schematics/",
+        "./src/**/*.d.ts",
+        "./src/**/*.spec.ts"
+    ]
+}
