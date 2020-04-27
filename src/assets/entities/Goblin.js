@@ -1,6 +1,7 @@
 class Goblin extends Entity {
     constructor(scene) {
-        super(scene, CST.ENTITIES.GOBLIN.name);
+        super();
+        this.object_name = CST.ENTITIES.GOBLIN.name;
         this.scene = scene;
         this.create(this.scene);
         this.createSpriteBody();

@@ -43,6 +43,8 @@ class Spawn_Home extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(this.player.sprite);
         this.cameras.main.roundPixels = true;
+        this.arrows = [];
+        global_storage.arrows = this.arrows;
         this.matter.world.on('collisionstart', function (event) {
             for (var i = 0; i < event.pairs.length; i++) {
                 var bodyA = getRootBody(event.pairs[i].bodyA);
@@ -56,13 +58,49 @@ class Spawn_Home extends Phaser.Scene {
                     this.player.savePlayer();
                     this.scene.start(CST.SCENES.SPAWN.name);
                 }
+                else if ((bodyA.label === CST.ENTITIES.ARROW.name || bodyB.label === CST.ENTITIES.ARROW.name) &&
+                    !(bodyA.label === CST.ENTITIES.ARROW.name && bodyB.label === CST.ENTITIES.ARROW.name) &&
+                    (bodyA.label !== CST.ENTITIES.PLAYER.name && bodyB.label !== CST.ENTITIES.PLAYER.name)) {
+                    var arrowBody = (bodyA.label === CST.ENTITIES.ARROW.name) ? bodyA : bodyB;
+                    var arrow = arrowBody.gameObject;
+                    var hitBody = (bodyA.label === CST.ENTITIES.ARROW.name) ? bodyB : bodyA;
+                    var hit = hitBody.gameObject;
+                    try {
+                        this.matter.world.remove(arrowBody);
+                        arrow.destroy();
+                    }
+                    catch (error) {
+                        console.log("ERROR: ", error);
+                        return;
+                    }
+                    this.arrows.forEach(a => {
+                        if (a.sprite.scene === undefined) {
+                            this.arrows.pop(a);
+                        }
+                    });
+                }
             }
         }, this);
         loadingScreen(false);
+        this.last_regen = 0;
         this.doc = document.getElementById("title");
     }
     update(time, delta) {
-        this.doc.innerHTML = Math.round((16.666 / delta) * 60);
+        if (this.last_regen > 100) {
+            if (this.player.data.hp < this.player.data.max_hp) {
+                this.player.data.hp += 1;
+            }
+            ;
+            if (this.player.data.mana < this.player.data.max_mana) {
+                this.player.data.mana += 1;
+            }
+            ;
+            this.player.savePlayer();
+            this.last_regen -= 100;
+        }
+        ;
+        this.last_regen += delta;
+        this.doc.innerHTML = `Application (${Math.round((16.666 / delta) * 60)})`;
         this.player.update(time, delta);
     }
 }

@@ -10,6 +10,7 @@ function getRootBody(body: any) {
     }
     return body;
 }
+
 var dragging = false;
 class WindowState{
     data: {
@@ -88,7 +89,6 @@ $(document).mouseup(function(e){
 
 var windowState: WindowState;
 var GLOBAL_GAME_OBJECT: Phaser.Game;
-GLOBAL_GAME_OBJECT
 window.onload = () => {
     GLOBAL_GAME_OBJECT = new Phaser.Game({
         type: Phaser.AUTO,

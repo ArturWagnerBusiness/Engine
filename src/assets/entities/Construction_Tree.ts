@@ -15,7 +15,7 @@ class Construction_Tree extends Construction{
         var M: typeof Matter = Phaser.Physics.Matter.Matter;
 
         
-        var buildingBody = M.Bodies.rectangle(0,0, 32, 24);
+        var buildingBody = M.Bodies.rectangle(0,0, 32, 20,  { chamfer: { radius: 8 } });
 
         
 

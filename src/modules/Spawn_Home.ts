@@ -9,6 +9,9 @@ class Spawn_Home extends Phaser.Scene{
     portals_objects: any[];
     spawn_points: Phaser.Types.Tilemaps.TiledObject[];
     above: Phaser.Tilemaps.StaticTilemapLayer;
+    last_regen: number;
+    doc: HTMLElement;
+    arrows: any[];
 
     constructor(){
         super({key: CST.SCENES.SPAWN_HOME.name});
@@ -67,6 +70,9 @@ class Spawn_Home extends Phaser.Scene{
         this.cameras.main.startFollow(this.player.sprite);
         this.cameras.main.roundPixels = true;
 
+        this.arrows = [];
+        global_storage.arrows = this.arrows;
+
         this.matter.world.on('collisionstart', function (event: Phaser.Physics.Matter.Events.CollisionStartEvent) {
             for (var i = 0; i < event.pairs.length; i++) {
                 var bodyA = getRootBody(event.pairs[i].bodyA);
@@ -81,23 +87,56 @@ class Spawn_Home extends Phaser.Scene{
                     this.player.savePlayer();
                     this.scene.start(CST.SCENES.SPAWN.name);
                 }
+                else if ((bodyA.label === CST.ENTITIES.ARROW.name || bodyB.label === CST.ENTITIES.ARROW.name)&&
+                        !(bodyA.label === CST.ENTITIES.ARROW.name && bodyB.label === CST.ENTITIES.ARROW.name)&&
+                         (bodyA.label !== CST.ENTITIES.PLAYER.name && bodyB.label !== CST.ENTITIES.PLAYER.name)){
+                    var arrowBody = (bodyA.label === CST.ENTITIES.ARROW.name)? bodyA : bodyB;
+                    var arrow = arrowBody.gameObject;
+                    var hitBody = (bodyA.label === CST.ENTITIES.ARROW.name)? bodyB : bodyA;
+                    var hit = hitBody.gameObject;
+
+                    try {
+                        this.matter.world.remove(arrowBody);
+                        arrow.destroy();
+                    } catch (error) {
+                        console.log("ERROR: ", error) // 2 objects reacted to the interraction! Ignoring the 2nd one.
+                        return
+                    }
+
+
+                    //@ts-ignore
+                    this.arrows.forEach(a => {
+                        //@ts-ignore
+                        if(a.sprite.scene === undefined){
+                            //@ts-ignore
+                            this.arrows.pop(a);
+                        }
+                    });
+                }
             }
         }, this);
-        /*
-        this.buildings.setTileLocationCallback(13, 10, 1, 1, ()=>{
-            loadingScreen(true);
-            this.scene.start("Spawn");
-        }, this)
-        */
-        
-        // this.physics.add.overlap(this.player, this.objects, this.onMeetEnemy);
+
         loadingScreen(false);
-        //@ts-ignore
+        this.last_regen = 0;
+        
         this.doc = document.getElementById("title");
     }
     update(time: any, delta: number){
-        //@ts-ignore
-        this.doc.innerHTML = Math.round((16.666/delta)*60);
+
+        if(this.last_regen>100){
+            if(this.player.data.hp<this.player.data.max_hp){
+                this.player.data.hp+=1
+            };
+            if(this.player.data.mana<this.player.data.max_mana){
+                this.player.data.mana+=1
+            };
+            this.player.savePlayer();
+            this.last_regen-=100;
+        };
+        this.last_regen+=delta;
+        
+        this.doc.innerHTML = `Application (${Math.round((16.666/delta)*60)})`;
+
         this.player.update(time, delta);
     }
 }

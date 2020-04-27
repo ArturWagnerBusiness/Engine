@@ -3,7 +3,8 @@ const CST = {
     ENTITIES: {
         PLAYER: Player,
         GOBLIN: Goblin,
-        PORTAL: Portal
+        PORTAL: Portal,
+        ARROW: Arrow
     },
     CONSTRUCTIONS: {
         HOME: Construction_Home,

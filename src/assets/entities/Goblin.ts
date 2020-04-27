@@ -8,7 +8,8 @@ class Goblin extends Entity{
         speed: number;
     }
     constructor(scene: Phaser.Scene){
-        super(scene, CST.ENTITIES.GOBLIN.name); // NAME
+        super(); // NAME
+        this.object_name = CST.ENTITIES.GOBLIN.name;
         this.scene = scene;
         this.create(this.scene);
         this.createSpriteBody()

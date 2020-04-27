@@ -54,6 +54,8 @@
         <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom!==1){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom-1);windowState.saveWindow();}"><h1>-</h1></button>
         <button type="button" onclick="loadingScreen(true)"><h5>True</h5></button>
         <button type="button" onclick="loadingScreen(false)"><h5>False</h5></button>
+        <script>var deadly_arrows=false;</script>
+        <button type="button" onclick="deadly_arrows=!deadly_arrows"><h5>ARROW</h5></button>
         <button class="head" type="button" onclick='(()=>{
           $("#Phaser_Zoom").toggleClass("expand");
           $("#Phaser_Zoom").toggleClass("contract");
@@ -98,6 +100,7 @@
       <script src="./assets/entities/Player.js"></script>
       <script src="./assets/entities/Goblin.js"></script>
       <script src="./assets/entities/Portal.js"></script>
+      <script src="./assets/entities/Arrow.js"></script>
 
       <!-- Game Scenes -->
       <script src="./modules/Spawn.js"></script>

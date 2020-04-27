@@ -6,10 +6,12 @@ class Player extends Entity{
         hp: number;
         max_hp: number;
         mana: number;
+        max_mana: number;
         speed: number;
         last_exit: string;
     }
     container: JQuery<HTMLElement>;
+    last_shot: number;
     preload(self: Phaser.Scene){
         self.load.spritesheet(CST.ENTITIES.PLAYER.name, "./assets/images/"+CST.ENTITIES.PLAYER.name+".png", {
             frameWidth: 32,
@@ -18,11 +20,14 @@ class Player extends Entity{
         document.getElementById("Manager")
     }
     constructor(scene: Phaser.Scene){
-        super(scene, CST.ENTITIES.PLAYER.name);
+        super();
+        this.object_name = CST.ENTITIES.PLAYER.name
+        this.last_shot = 0;
         this.scene = scene;
         this.create();
         this.createSpriteBody()
         this.controls = this.scene.input.keyboard.createCursorKeys();
+
         
         global_storage.player = this;
         
@@ -32,7 +37,8 @@ class Player extends Entity{
     updateDisplay(){
         $("#Player>.hp>.bar>.text").html(`${this.data.hp}/${this.data.max_hp}`);
         $("#Player>.hp>.bar>.fill").css("width", Math.round((this.data.hp/this.data.max_hp)*100)+"%")
-        $("#Player>.mana>.bar>.text").html(`${this.data.mana}`);
+        $("#Player>.mana>.bar>.text").html(`${this.data.mana}/${this.data.max_mana}`);
+        $("#Player>.mana>.bar>.fill").css("width", Math.round((this.data.mana/this.data.max_mana)*100)+"%")
         $("#Player>.speed>.bar>.text").html(`${this.data.speed}`);
     }
     loadPlayer(force_new: boolean){
@@ -43,6 +49,7 @@ class Player extends Entity{
                 hp: 100,
                 max_hp: 100,
                 mana: 100,
+                max_mana: 100,
                 speed: 2,
                 last_exit: ""
             }
@@ -73,6 +80,10 @@ class Player extends Entity{
     create(){
 
         var object_name = CST.ENTITIES.PLAYER.name;
+
+        this.scene.input.on('pointerdown', ()=>{
+            this.click();
+        }, this)
 
         this.scene.anims.create({
             key: object_name+'_left',
@@ -105,10 +116,38 @@ class Player extends Entity{
             repeat: -1
         });
     }
+    click(){
+        if(this.last_shot > 250 && this.data.mana>=5){
+            this.data.mana -=5;
+            this.shot(5, 0);
+            this.savePlayer();
+            this.last_shot = 0
+        };
+    }
+    shot(speed: number, angleOffset: number){
+        const crosshairX = this.scene.input.mousePointer.x + this.scene.cameras.main.worldView.x;
+        const crosshairY = this.scene.input.mousePointer.y + this.scene.cameras.main.worldView.y;
+        var rotation = Phaser.Math.Angle.Between(this.sprite.x, this.sprite.y, crosshairX, crosshairY)+Math.PI;
+        //@ts-ignore
+        this.scene.arrows.push(new CST.ENTITIES.ARROW(this.scene, speed, rotation+angleOffset, this));
+        this.last_shot=0;
+    }
     update(time: any, delta: number) {
         this.sprite.depth = this.sprite.y+10;
+        this.last_shot+=delta;
 
         this.updateDisplay();
+        
+        if (this.controls.space.isDown){
+            
+            if(this.last_shot > 1000 && this.data.mana>=20){
+                this.data.mana -=20;
+                this.shot(5, 0)
+                this.shot(5, -0.3)
+                this.shot(5, 0.3)
+                this.savePlayer();
+            };
+        }
 
         this.sprite.setVelocity(0);
         // Horizontal movement

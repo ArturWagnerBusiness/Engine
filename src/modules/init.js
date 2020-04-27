@@ -79,7 +79,6 @@ $(document).mouseup(function (e) {
 });
 var windowState;
 var GLOBAL_GAME_OBJECT;
-GLOBAL_GAME_OBJECT;
 window.onload = () => {
     GLOBAL_GAME_OBJECT = new Phaser.Game({
         type: Phaser.AUTO,
