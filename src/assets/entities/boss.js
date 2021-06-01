@@ -1,6 +1,6 @@
-class Goblin {
+class Boss {
     constructor(scene, index) {
-        this.name = "goblin";
+        this.name = "boss";
         this.scene = scene;
         this.index = index;
         this.create(this.scene);
@@ -8,7 +8,7 @@ class Goblin {
         this.sprite.setActive(false);
         this.sprite.setVisible(false);
         this.healthbar.setVisible(false);
-        this.setPosition(-50, 0 - 40 * this.index);
+        this.setPosition(-250, 0 - 100 * this.index);
         this.sprite.setVelocityX(0);
         this.sprite.setVelocityY(0);
         this.reusable = true;
@@ -38,16 +38,9 @@ class Goblin {
         this.healthbar.setVisible(false);
         this.sprite.setVelocityX(0);
         this.sprite.setVelocityY(0);
+        this.setPosition(-250, 0 - 100 * this.index);
         this.sprite.setVelocity(0);
-        this.setPosition(-50, 0 - 40 * this.index);
         this.reusable = true;
-    }
-    shot(speed, angleOffset, dmg) {
-        const crosshairX = this.scene.object_manager.player.sprite.x;
-        const crosshairY = this.scene.object_manager.player.sprite.y;
-        var rotation = Phaser.Math.Angle.Between(this.sprite.x, this.sprite.y, crosshairX, crosshairY) + Math.PI;
-        this.scene.object_manager.fireProjectileArrow(rotation + angleOffset, speed, this, dmg, ["boss", "arrow", "goblin"], 200);
-        this.last_shot = 0;
     }
     createSpriteBody() {
         var M = Phaser.Physics.Matter.Matter;
@@ -61,14 +54,17 @@ class Goblin {
             friction: 0,
             restitution: 0
         });
-        this.sprite = this.scene.matter.add.sprite(0, 0, "player").setExistingBody(compoundBody).setFixedRotation();
+        this.sprite = this.scene.matter.add.sprite(0, 0, "player").setExistingBody(compoundBody);
+        this.sprite.setScale(2);
+        this.sprite.setFixedRotation();
         this.healthbar = this.scene.add.graphics();
     }
-    pause() {
-        this.sprite.setStatic(true);
-    }
-    unpause() {
-        this.sprite.setStatic(false);
+    shot(speed, angleOffset, dmg) {
+        const crosshairX = this.scene.object_manager.player.sprite.x;
+        const crosshairY = this.scene.object_manager.player.sprite.y;
+        var rotation = Phaser.Math.Angle.Between(this.sprite.x, this.sprite.y, crosshairX, crosshairY) + Math.PI;
+        this.scene.object_manager.fireProjectileArrow(rotation + angleOffset, speed, this, dmg, ["boss", "arrow", "goblin"], 1000);
+        this.last_shot = 0;
     }
     collision(entity) {
         if (entity.name === "arrow") {
@@ -89,6 +85,7 @@ class Goblin {
                 }
                 ;
                 this.data.reward = 0;
+                this.data.reward = 0;
                 this.disable();
             }
         }
@@ -100,26 +97,36 @@ class Goblin {
         this.sprite.setPosition(x, y);
     }
     preload(self) {
-        self.load.spritesheet("goblin", "./assets/images/goblin.png", {
+        self.load.spritesheet("boss", "./assets/images/boss.png", {
             frameWidth: 32,
             frameHeight: 32
         });
     }
     create(self) {
     }
+    pause() {
+        this.sprite.setStatic(true);
+    }
+    unpause() {
+        this.sprite.setStatic(false);
+    }
     update(time, delta) {
         this.sprite.setVelocity(0);
         this.last_shot += delta;
-        var distance = Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, this.scene.object_manager.player.sprite.x, this.scene.object_manager.player.sprite.y);
-        if (this.last_shot > 1000 && distance < 70) {
-            this.shot(5, 0, 10);
+        if (this.last_shot > 500) {
+            this.shot(7, 0.05, 10);
+            this.shot(7.5, 0, 10);
+            this.shot(7, -0.05, 10);
+            this.shot(5, 0.05, 15);
+            this.shot(5.5, 0, 15);
+            this.shot(5, -0.05, 15);
         }
         var rotation = Phaser.Math.Angle.Between(this.sprite.x, this.sprite.y, this.scene.object_manager.player.sprite.x, this.scene.object_manager.player.sprite.y) + Math.PI;
         this.sprite.setVelocityX(Math.cos(rotation + Math.PI) * this.data.speed);
         this.sprite.setVelocityY(Math.sin(rotation + Math.PI) * this.data.speed);
         this.healthbar.clear();
         this.healthbar.fillStyle(0x000000, 1);
-        this.healthbar.fillRect(this.sprite.x - 16, this.sprite.y + 16, 40, 5);
+        this.healthbar.fillRect(this.sprite.x - 40, this.sprite.y + 32, 80, 10);
         if (this.data.hp / this.data.max_hp < 0.25) {
             this.healthbar.fillStyle(0xff0000, 1);
         }
@@ -129,6 +136,6 @@ class Goblin {
         else {
             this.healthbar.fillStyle(0x00ff00, 1);
         }
-        this.healthbar.fillRect(this.sprite.x - 16, this.sprite.y + 16, Math.floor(40 * this.data.hp / this.data.max_hp), 5);
+        this.healthbar.fillRect(this.sprite.x - 40, this.sprite.y + 32, Math.floor(80 * this.data.hp / this.data.max_hp), 10);
     }
 }

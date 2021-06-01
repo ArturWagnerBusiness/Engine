@@ -1,0 +1,32 @@
+
+      <div id="Phaser"></div>
+      <div id="Manager">
+        <div id="Player" class="content">
+          <div class="hp">
+            <div class="text">Health</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+          <div class="mana">
+            <div class="text">Mana</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+          <div class="speed">
+            <div class="text">Speed</div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="text"></div>
+            </div>
+          </div>
+          <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom<5){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom+1);windowState.saveWindow();}"><h1>[+]</h1></button>
+          <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom!==1){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom-1);windowState.saveWindow();}"><h1>[-]</h1></button>
+          <button type="button" onclick="loadingScreen(true)"><h5>True</h5></button>
+          <button type="button" onclick="loadingScreen(false)"><h5>False</h5></button>
+        </div>
+        <div class="dragbar"></div>
+      </div>

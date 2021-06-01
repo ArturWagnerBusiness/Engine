@@ -2,7 +2,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 //@ts-ignore
-const { menu } = require("./engine/menu");
+const { menu } = require("./launcher/menu");
 
 const isWindows = process.platform === "win32";
 
@@ -18,8 +18,10 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
+    minWidth: 1280,
+    minHeight: 720,
     webPreferences: {
-      preload: path.join(__dirname, "engine/preload.js")
+      preload: path.join(__dirname, "launcher/preload.js")
     },
     frame: isWindows ? false : true //Remove frame to hide default menu
   });

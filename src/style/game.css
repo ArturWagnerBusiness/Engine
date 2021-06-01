@@ -1,0 +1,113 @@
+#GameSpace {
+  overflow: hidden;
+  flex: 1;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+#main-menu {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  margin: auto;
+  background-color: rgb(49, 61, 77);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 0px 5px 1px rgb(49, 61, 77);
+}
+#main-menu>.title{
+  padding: 20px;
+  font-size: 32px;
+  font-weight: bold;
+}
+#main-menu>.options{
+  width: 100%;
+  font-size: 24px;
+}
+#main-menu>.options>div{
+  text-align: center;
+  cursor: pointer;
+  margin: 5px 0px;
+  padding: 10px 0px;
+  transition: background-color 100ms ease;
+  background-color: rgb(49, 61, 77)
+}
+#main-menu>.options>div:hover{
+  transition: background-color 100ms ease;
+  background-color: rgb(83, 93, 106);
+}
+
+.drag-element {
+  top: 500px;
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  background-color: rgb(45, 54, 65);
+  box-shadow: 0px 0px 5px 1px rgb(49, 61, 77);
+}
+.drag-element>.content{
+  overflow: hidden;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: height 200ms ease-in;
+}
+.drag-element.expand>.content{
+  height: 0px;
+  transition: height 200ms ease-out;
+}
+.drag-element>.content>div{
+  padding: 10px 0px;
+}
+
+.drag-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 3;
+  background-color: rgb(49, 61, 77);
+  color: rgb(245, 233, 217);
+}
+.drag-header>.title{
+  cursor: move;
+  flex: 1;
+  padding: 10px 15px;
+  text-align: center;
+}
+.drag-element.shrink>.drag-header>.minimise::after{
+  content: "\\/"
+}
+.drag-element.expand>.drag-header>.minimise::after{
+  content: "/\\"
+}
+.drag-header>.minimise{
+  padding: 10px 3px;
+  cursor: pointer;
+  width: 30px;
+  text-align: center;
+  background-color: rgb(49, 61, 77);
+  transition: background-color 100ms ease;
+
+}
+.drag-header>.minimise:hover{
+  background-color: rgb(83, 93, 106);
+  transition: background-color 100ms ease;
+}
+.drag-header>.close::after{
+  content: "X";
+}
+.drag-header>.close{
+  padding: 10px 3px;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(49, 61, 77);
+  transition: background-color 100ms ease;
+}
+.drag-header>.close:hover{
+  background-color: rgb(0, 97, 187);
+  transition: background-color 100ms ease;
+}

@@ -1,0 +1,70 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+body{
+  overflow: hidden;
+}
+#content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 30px);
+  background-color: rgb(45, 54, 65);
+  color: white;
+  overflow: hidden;
+}
+#menu-bar {
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  background-color: rgb(49, 61, 77);
+  -webkit-app-region: drag;
+}
+#menu-bar > div > h5 {
+  margin-left: 5px;
+  color: rgb(245, 233, 217)
+}
+#menu-bar > div {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#menu-bar>div>.menubar-btn {
+  -webkit-app-region: no-drag;
+}
+
+#menu-bar>div>button {
+  cursor: pointer;
+  height: 100%;
+  padding: 0 15px;
+  border: none;
+  background-color: rgba(83,93,106,0);
+  transition: 150ms background-color;
+  outline: none;
+}
+
+#menu-bar>div>button:hover {
+  transition: 150ms background-color;
+  background-color: rgba(83,93,106,1);
+}
+
+#menu-bar>div>#close-btn:hover {
+  transition: 150ms background-color;
+  background-color: rgb(0, 97, 187);
+}
+
+#menu-bar>div>button>i {
+  color: rgb(245, 233, 217);
+}

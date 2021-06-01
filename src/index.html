@@ -2,16 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Application</title>
+    <title>Rise of Selior</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="./style/index.css">
-    <link rel="stylesheet" href="./style/menu.css">
-    <link rel="stylesheet" href="./style/loading.css">
-    <link rel="stylesheet" href="./style/Player.css">
-
+    <link rel="stylesheet" href="./style/launcher.css">
+    <link rel="stylesheet" href="./style/game.css">
+    <link rel="stylesheet" href="./style/manager.css">
     <!-- Font -->
-    <script src="./lib/1c9144b004.js" crossorigin="anonymous"></script>
+    <script src="./lib/font-awesome-kit.js" crossorigin="anonymous"></script>
     
     <!-- Libraries -->
     <script src="./lib/jquery-3.5.0.min.js"></script>
@@ -21,7 +19,7 @@
     <div id="menu-bar">
       <div class="left" role="menu">
         <button class="menubar-btn" id="menu-btn"><i class="fas fa-bars"></i></button>
-        <h5 id="title">Application</h5>
+        <h5 id="title">Rise of Selior</h5>
       </div>
       <div class="right">
         <button class="menubar-btn" id="minimize-btn"><i class="fas fa-window-minimize"></i></button>
@@ -29,91 +27,32 @@
         <button class="menubar-btn" id="close-btn"><i class="fas fa-times"></i></button>
       </div>
     </div>
+    <!-- Load Window Header-->
+    <script src="./launcher/renderer.js"></script>
+
     <div id="content">
-      <!-- Loading Scene -->
-      <div id="loading" class="">
-        <div class="background"></div>
-        <div class="spinner right" style="top:10px;left:10px;"></div>
-        <div class="spinner right" style="top:10px;left:60px;"></div>
-        <div class="spinner right" style="top:10px;left:110px;"></div>
-        <div class="spinner left" style="top:10px;right:10px;"></div>
-        <div class="spinner left" style="top:10px;right:60px;"></div>
-        <div class="spinner left" style="top:10px;right:110px;"></div>
-        <div class="spinner right" style="bottom:10px;left:10px;"></div>
-        <div class="spinner right" style="bottom:10px;left:60px;"></div>
-        <div class="spinner right" style="bottom:10px;left:110px;"></div>
-        <div class="spinner left" style="bottom:10px;right:10px;"></div>
-        <div class="spinner left" style="bottom:10px;right:60px;"></div>
-        <div class="spinner left" style="bottom:10px;right:110px;"></div>
-        <div class="text"></div>
-      </div>
-
       <!-- Canvas -->
-      <div id="Phaser_Zoom" class="contract">
-        <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom<5){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom+1);windowState.saveWindow();}"><h1>+</h1></button>
-        <button type="button" onclick="if(GLOBAL_GAME_OBJECT.scale.zoom!==1){GLOBAL_GAME_OBJECT.scale.setZoom(GLOBAL_GAME_OBJECT.scale.zoom-1);windowState.saveWindow();}"><h1>-</h1></button>
-        <button type="button" onclick="loadingScreen(true)"><h5>True</h5></button>
-        <button type="button" onclick="loadingScreen(false)"><h5>False</h5></button>
-        <script>var deadly_arrows=false;</script>
-        <button type="button" onclick="deadly_arrows=!deadly_arrows"><h5>ARROW</h5></button>
-        <button class="head" type="button" onclick='(()=>{
-          $("#Phaser_Zoom").toggleClass("expand");
-          $("#Phaser_Zoom").toggleClass("contract");
-          $("#Phaser_Zoom .head").html((document.getElementById("Phaser_Zoom").className==="expand")?"<h3>&lt</h3>":"<h4>&gt</h3>");
-        })()'><h3>&gt</h3></button>
-      </div>
-      <div id="Phaser"></div>
-      <div id="Manager">
-        <div id="Player" class="content">
-          <div class="hp">
-            <div class="text">Health</div>
-            <div class="bar">
-              <div class="fill"></div>
-              <div class="text"></div>
-            </div>
-          </div>
-          <div class="mana">
-            <div class="text">Mana</div>
-            <div class="bar">
-              <div class="fill"></div>
-              <div class="text"></div>
-            </div>
-          </div>
-          <div class="speed">
-            <div class="text">Speed</div>
-            <div class="bar">
-              <div class="fill"></div>
-              <div class="text"></div>
-            </div>
-          </div>
-        </div>
-        <div class="dragbar"></div>
-      </div>
-
-
-      <!-- Game Objects -->
-      <script src="./assets/entities/Construction.js"></script>
-      <script src="./assets/entities/Construction_Home.js"></script>
-      <script src="./assets/entities/Construction_Tree.js"></script>
-
-      <script src="./assets/entities/Entity.js"></script>
-      <script src="./assets/entities/Player.js"></script>
-      <script src="./assets/entities/Goblin.js"></script>
-      <script src="./assets/entities/Portal.js"></script>
-      <script src="./assets/entities/Arrow.js"></script>
-
-      <!-- Game Scenes -->
-      <script src="./modules/Spawn.js"></script>
-      <script src="./modules/Spawn_Home.js"></script>
-
-      <!-- Const -->
-      <script src="./CST.js"></script>
+      <div id="GameSpace" style="display: block;"></div>
       
-      <!-- Load Window Header-->
-      <script src="./engine/renderer.js"></script>
 
-      <!-- Game init -->
-      <script src="./modules/init.js"></script>
     </div>
+
+    <!-- Game Objects -->
+
+    <script src="./assets/entities/player.js"></script>
+    <script src="./assets/entities/goblin.js"></script>
+    <script src="./assets/entities/boss.js"></script>
+    <script src="./assets/entities/arrow.js"></script>
+
+    <!-- Game Scenes -->
+    <script src="./assets/worlds/village.js"></script>
+
+    <!-- Main objects -->
+    <script src="./logic/object_manager.js"></script>
+    <script src="./logic/dropdowns.js"></script>
+    <script src="./logic/util.js"></script>
+    
+    <!-- Game init -->
+    <script src="./assets/worlds/init.js"></script>
   </body>
 </html>
